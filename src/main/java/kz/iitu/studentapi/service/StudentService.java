@@ -1,5 +1,6 @@
 package kz.iitu.studentapi.service;
 
+import kz.iitu.studentapi.exception.StudentNotFoundException;
 import kz.iitu.studentapi.model.Student;
 import kz.iitu.studentapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class StudentService {
     }
 
     public Student findById(Long id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
     public Student create(Student student) {
