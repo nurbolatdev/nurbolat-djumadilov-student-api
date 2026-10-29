@@ -19,4 +19,4 @@ Author: Nurbolat Djumadilov, group IT2-2313, IITU
 Added UPDATE and DELETE operations and a proper 404 response
 when a student with the given id does not exist.
 
-Status: in development
+Status: ready for Docker deployment (main branch)
