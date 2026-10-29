@@ -30,4 +30,10 @@ class StudentControllerTest {
         mockMvc.perform(get("/api/students"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void notFoundStudentReturns404() throws Exception {
+        mockMvc.perform(get("/api/students/9999"))
+                .andExpect(status().isNotFound());
+    }
 }
