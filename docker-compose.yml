@@ -1,0 +1,43 @@
+name: nurbolat-djumadilov-student-api
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: nurbolat-djumadilov-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-studentdb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - nurbolat_pgdata:/var/lib/postgresql/data
+    networks:
+      - nurbolat-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-studentdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    image: nurbolat-djumadilov-student-api:v1.0-nurbolat-djumadilov
+    container_name: nurbolat-djumadilov-app
+    environment:
+      # "postgres" is the service name, not localhost
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-studentdb}
+      DB_USERNAME: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - nurbolat-net
+
+volumes:
+  nurbolat_pgdata:
+
+networks:
+  nurbolat-net:
+    driver: bridge

@@ -1,0 +1,22 @@
+# Gradle / build
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# macOS
+.DS_Store
+
+# Secrets - never commit
+.env
+
+# Logs and backups (keep empty folders)
+logs/*
+!logs/.gitkeep
+backups/*
+!backups/.gitkeep
+*.log
